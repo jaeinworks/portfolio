@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>김집사 브랜드아이덴티티</title>
+  <link rel="icon" href="../favicon.png" />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black: #0a0a0a; --gray: #888; --light-gray: #ebebeb; --white: #fff;
+      --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-serif: "Georgia", "Times New Roman", serif;
+    }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body { background: var(--white); color: var(--black); font-family: var(--font-sans); font-weight: 400; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+    nav { position: sticky; top: 0; background: rgba(255,255,255,0.82); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 100; will-change: transform; }
+    .nav-inner { max-width: 720px; margin: 0 auto; padding: 0 24px; height: 52px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { font-size: 0.9375rem; font-weight: 600; letter-spacing: -0.01em; }
+    .nav-back { font-size: 0.8125rem; color: var(--gray); transition: color 0.15s; }
+    .nav-back:hover { color: var(--black); text-decoration: none; }
+
+    .text-wrap { max-width: 720px;  margin: 0 auto; padding: 0 24px; }
+    .img-outer  { max-width: 1000px; margin: 56px auto; padding: 0 24px; }
+
+    .toc-sidebar { display: none; position: fixed; top: 100px; left: calc(50% + 528px); width: 180px; z-index: 50; transform: translateZ(0); will-change: transform; }
+    @media (min-width: 1400px) { .toc-sidebar { display: flex; flex-direction: column; max-height: calc(100vh - 120px); } }
+    .toc-label { font-size: 0.625rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: #888888; margin-bottom: 12px; }
+    .toc-scroll-wrap { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+    .toc-list { list-style: none; flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: none; }
+    .toc-list::-webkit-scrollbar { display: none; }
+    .toc-list li + li { margin-top: 2px; }
+    .toc-link { display: block; font-size: 0.75rem; line-height: 1.55; color: var(--gray); padding: 3px 0 3px 12px; border-left: 1.5px solid transparent; transition: color 0.15s, border-color 0.15s; }
+    .toc-link:hover { color: var(--black); text-decoration: none; }
+    .toc-link.active { color: var(--black); border-left-color: var(--black); }
+
+    .proj-header { padding: 72px 0 52px; border-bottom: 1px solid var(--light-gray); }
+    .proj-label  { font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray); margin-bottom: 20px; }
+    .proj-title  { font-family: var(--font-sans); font-size: 20px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.05; margin-bottom: 16px; }
+    .proj-sub    { font-size: 1rem; color: var(--gray); line-height: 1.65; }
+
+    .proj-meta { display: flex; gap: 48px; padding: 32px 0; border-bottom: 1px solid var(--light-gray); flex-wrap: wrap; }
+    .proj-meta > div { flex: 1; min-width: 132px; }
+    .meta-key  { font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray); margin-bottom: 4px; }
+    .meta-val  { font-size: 0.9375rem; }
+
+    .prose { font-size: 1.0625rem; line-height: 1.875; color: #1a1a1a; padding: 52px 0 0; }
+    .prose p + p { margin-top: 1.4em; }
+    .prose h2 { font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray); margin-bottom: 20px; scroll-margin-top: 80px; }
+    .prose h1 { font-family: var(--font-sans); font-size: 20px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.05; margin-bottom: 16px; }
+
+    .img-frame  { border-radius: 8px; border: 1px solid rgba(0,0,0,0.07); overflow: hidden; }
+    .img-frame img { width: 100%; height: auto; display: block; }
+    .img-grid   { display: grid; grid-template-columns: 1fr 1fr;     gap: 8px; }
+    .img-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+
+    .img-ph { width: 100%; aspect-ratio: 7/5; background: #f2f2f2; display: flex; align-items: center; justify-content: center; }
+    .img-ph.sq   { aspect-ratio: 7/5; }
+    .img-ph.tall { aspect-ratio: 7/5; }
+    .img-ph.wide { aspect-ratio: 7/5; }
+    .img-ph span { font-size: 0.6875rem; letter-spacing: 0.08em; text-transform: uppercase; color: #c0c0c0; user-select: none; }
+    .img-caption { font-size: 0.8125rem; color: var(--gray); margin-top: 10px; }
+
+    .proj-nav { display: flex; border-top: 1px solid var(--light-gray); margin-top: 80px; }
+    .pn-item  { flex: 1; padding: 32px 0 72px; display: flex; flex-direction: column; gap: 6px; }
+    .pn-item.next { text-align: right; }
+    .pn-arrow { font-size: 1.125rem; color: var(--gray); line-height: 1; }
+    .pn-label { font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray); }
+    .pn-name  { font-size: 0.9375rem; font-weight: 500; letter-spacing: -0.01em; }
+    .pn-item a { display: flex; flex-direction: column; gap: 6px; }
+    .pn-item a:hover { text-decoration: none; }
+    .pn-item a:hover .pn-name { opacity: 0.6; }
+    .pn-item.next a { align-items: flex-end; }
+
+    footer { padding: 0 0 24px; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; border-top: 1px solid var(--light-gray); padding-top: 16px; }
+    .footer-copy  { font-size: 0.8125rem; color: var(--gray); }
+    .footer-links { display: flex; gap: 20px; list-style: none; }
+    .footer-links a { font-size: 0.8125rem; color: var(--gray); }
+    .footer-links a:hover { color: var(--black); text-decoration: none; }
+
+    @media (max-width: 680px) {
+      .img-outer { padding: 0 16px; }
+      .img-grid, .img-grid-3 { grid-template-columns: 1fr; }
+      .proj-meta { gap: 20px; }
+      
+      .pn-item { padding: 32px 0 40px; }
+    }
+  </style>
+</head>
+<body>
+
+  <aside class="toc-sidebar" aria-label="목차">
+    <p class="toc-label">On this page</p>
+    <ul class="toc-list">
+    </ul>
+  </aside>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="../index.html" class="nav-logo">Jaein Works.</a>
+      <a href="../project.html" class="nav-back">← Project</a>
+    </div>
+  </nav>
+
+  <main>
+
+    <div class="text-wrap">
+      <header class="proj-header">
+        <p class="proj-label">Project</p>
+        <h1 class="proj-title">김집사 브랜드아이덴티티</h1>
+        <p class="proj-sub">생활 밀착형 컨시어지 서비스의 브랜드 디자인을 총괄하며, 브랜드 아이덴티티 구축부터 디지털·오프라인 전반의 디자인 경험을 설계했습니다.</p>
+      </header>
+      <div class="proj-meta">
+        <div><div class="meta-key">기간</div><div class="meta-val">2020.1 — 6</div></div>
+        <div><div class="meta-key">분야</div><div class="meta-val">Brand Design</div></div>
+        <div><div class="meta-key">도구</div><div class="meta-val">Illustrator, Photoshop</div></div>
+        <div><div class="meta-key">기여도</div><div class="meta-val">100%</div></div>
+      </div>
+    </div>
+
+    <div class="text-wrap">
+      <div class="prose">
+        <h2 id="overview">Overview</h2>
+        <p>기존에 김집사는 기본 폰트로만 이루어진 타입 페이스를 사용하고 있었으며, 비주얼 아이덴티티가 명확히 확립되어있지 않았습니다. 이러한 부족한 점을 보완하기 위해, 타입 페이스와 심볼 디벨롭을 위한 BI 베이직 시스템을 구축하고, 각 BI가 적용된 어플리케이션 시스템을 확장하여 김집사 브랜드 아이덴티티를 강화하고자 노력하였습니다.</p>
+      </div>
+    </div>
+
+    <div class="img-outer">
+      <div class="img-frame"><img src="../images/kimzipsa1.jpg" alt="Overview"></div>
+    </div>
+
+    <div class="text-wrap">
+      <div class="prose">
+        <h2 id="branding">Attention Logo & App Icon</h2>
+        <p>스타트업과 중소기업을 위한 로고, 컬러 시스템, 타이포그래피 가이드를 포함한 브랜드 매뉴얼을 제작했습니다. 단순히 예쁜 것이 아니라 브랜드의 가치를 정확히 전달하는 방향으로 작업했습니다.</p>
+      </div>
+    </div>
+
+    <div class="img-outer">
+      <div class="img-frame"><img src="../images/kimzipsa2.jpg" alt="Attention Logo & App Icon"></div>
+      <p class="img-caption">어텐션 로고(좌) / 앱 아이콘(우)</p>
+    </div>
+
+    <div class="text-wrap">
+      <div class="prose">
+        <h2 id="web">브랜드 아이덴티티 확장</h2>
+        <p>구축한 BI를 디지털과 오프라인 전반에 걸쳐 확장 적용하였습니다. 앱 스크린, 유니폼, 명함, 스테이셔너리, 티슈·쿠폰 등 고객 접점이 되는 모든 매체에 일관된 브랜드 언어가 구현될 수 있도록 어플리케이션 시스템을 설계하였습니다.</p>
+      </div>
+    </div>
+
+    <div class="img-outer">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div class="img-frame"><img src="../images/kimzipsa3-1.jpg" alt="브랜드 아이덴티티 확장 1"></div>
+        <div class="img-frame"><img src="../images/kimzipsa3-2.jpg" alt="브랜드 아이덴티티 확장 2"></div>
+      </div>
+      <p class="img-caption">App Screen(좌) / Outfits, Name tag(우)</p>
+    </div>
+
+    <div class="img-outer">
+      <div class="img-grid">
+        <div class="img-frame"><img src="../images/kimzipsa4-1.jpg" alt="Brochure Design"></div>
+        <div class="img-frame"><img src="../images/kimzipsa4-2.jpg" alt="Business Card & Stationery"></div>
+      </div>
+      <p class="img-caption">Name Card, Pin Badge(좌) / Stationery(우)</p>
+    </div>
+
+    <div class="img-outer">
+      <div class="img-frame"><img src="../images/kimzipsa5.jpg" alt="Leaflet"></div>
+      <p class="img-caption">Leaflet</p>
+    </div>
+
+    <div class="img-outer">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div class="img-frame"><img src="../images/kimzipsa6-1.jpg" alt="Image 6-1"></div>
+        <div class="img-frame"><img src="../images/kimzipsa6-2.jpg" alt="Image 6-2"></div>
+      </div>
+      <p class="img-caption">Tissue(좌) / Free Coupons(우)</p>
+    </div>
+
+    <div class="text-wrap">
+      <div class="prose">
+        <h2 id="section-a">UI Icons 개편</h2>
+        <p>기존 아이콘의 가독성 문제를 개선하기 위해 아이콘 전체를 리뉴얼하였습니다. 굵은 아웃라인과 스티커 형태의 일러스트 스타일로 통일하여 브랜드 톤에 맞는 친근하고 개성 있는 비주얼을 완성하였으며, 실제 메인 화면에 적용했을 때도 카테고리 구분이 직관적으로 인식될 수 있도록 하였습니다.</p>
+      </div>
+    </div>
+    <div class="img-outer">
+      <div class="img-frame"><img src="../images/kimzipsa7.jpg" alt="Image A"></div>
+    </div>
+
+    <div class="text-wrap">
+      <div class="prose">
+        <h2 id="section-b">Homepage</h2>
+        <p>김집사 서비스의 홈페이지를 템플릿 기반으로 제작하였습니다. 메인 화면에서는 서비스의 핵심 메시지와 앱 다운로드 링크를 전면에 배치하여 신규 유저의 유입을 유도하였고, 함께해요 탭에서는 이벤트·프로모션 컨텐츠를 카드형으로 나열하여 사용자가 최신 소식을 한눈에 파악할 수 있도록 구성하였습니다.</p>
+      </div>
+    </div>
+    <div class="img-outer">
+      <div class="img-frame"><img src="../images/kimzipsa8.jpg" alt="Image B"></div>
+    </div>
+
+    <div class="text-wrap">
+      <div class="prose">
+        <h2 id="section-c">비주얼 애셋</h2>
+        <h1>김집사 캐릭터 애셋</h1>
+        <p>김집사의 BI를 보완하고, 김집사 서비스를 이용하는 고객들에게 더 친숙하고 친절한 이미지를 전달하기 위한 보조 수단으로, 새로운 캐릭터를 제작하였습니다. 기존 캐릭터의 역할은 주로 인포그래픽이나 컨텐츠의 보조 그래픽으로 제한되었지만, 새로운 캐릭터는 굿즈 제작이나 앱 UI 등 다양한 용도로 활용할 수 있도록 디자인되었습니다.</p>
+      </div>
+    </div>
+    <div class="img-outer">
+      <div class="img-frame"><img src="../images/kimzipsa9.jpg" alt="Image C"></div>
+    </div>
+
+    <div class="text-wrap">
+      <div class="prose">
+        <h2 id="section-d">History of Change</h2>
+        <p>캐릭터는 Old version에서 First Renewal, Final Renewal로 단계적으로 발전하였습니다. 초기 버전은 단순한 선형 일러스트로 제한적인 표현에 머물렀고, 1차 리뉴얼에서는 집사와 고객 등 다양한 역할의 캐릭터를 추가하며 서사를 확장하였습니다. 최종 리뉴얼에서는 브랜드 컬러인 옐로우를 전면에 활용하고 캐릭터의 표정과 포즈를 더욱 다채롭게 다듬어, 굿즈·앱 UI 등 다양한 매체에서 일관되고 생동감 있는 브랜드 경험을 전달할 수 있는 완성도 높은 캐릭터로 완성하였습니다.</p>
+      </div>
+    </div>
+    <div class="img-outer">
+      <div class="img-frame"><img src="../images/kimzipsa10.jpg" alt="Image D"></div>
+    </div>
+
+    <div class="text-wrap">
+      <div class="prose">
+        <p>캐릭터는 헤어·표정·액세서리·바디 옵션을 조합하는 시스템 방식으로 설계되어, 다양한 상황과 용도에 맞게 유연하게 변형하여 활용할 수 있습니다. 각 요소를 독립적으로 교체·조합할 수 있어 일관된 브랜드 아이덴티티를 유지하면서도 풍부한 표현이 가능하도록 하였습니다.</p>
+      </div>
+    </div>
+
+    <div class="img-outer">
+      <div class="img-frame"><img src="../images/kimzipsa11.jpg" alt="Image E"></div>
+      <p class="img-caption">Combination System</p>
+    </div>
+
+    <div class="img-outer">
+      <div class="img-frame"><img src="../images/kimzipsa12.jpg" alt="Image F"></div>
+      <p class="img-caption">Zipsa : Bike Basic ver.</p>
+    </div>
+
+    <div class="img-outer">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div class="img-frame"><img src="../images/kimzipsa13-1.jpg" alt="Image G-1"></div>
+        <div class="img-frame"><img src="../images/kimzipsa13-2.jpg" alt="Image G-2"></div>
+      </div>
+      <p class="img-caption">Zipsa : Stand Vest ver.(좌) / People : Stand ver.(우)</p>
+    </div>
+
+    <div class="img-outer">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div class="img-frame"><img src="../images/kimzipsa14-1.jpg" alt="Image H-1"></div>
+        <div class="img-frame"><img src="../images/kimzipsa14-2.jpg" alt="Image H-2"></div>
+      </div>
+      <p class="img-caption">Posters</p>
+    </div>
+
+    <div class="img-outer">
+      <div class="img-frame"><img src="../images/kimzipsa15.jpg" alt="Image I"></div>
+      <p class="img-caption">Door Sticker</p>
+    </div>
+
+    <div class="img-outer">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div class="img-frame"><img src="../images/kimzipsa16-1.jpg" alt="Image J-1"></div>
+        <div class="img-frame"><img src="../images/kimzipsa16-2.jpg" alt="Image J-2"></div>
+      </div>
+      <p class="img-caption">Wobbler(좌) / X Banner(우)</p>
+    </div>
+
+    <div class="text-wrap">
+      <div class="prose">
+        <p>제작된 캐릭터는 이모티콘으로 확장되어 김집사 채팅 UI에서도 활용됩니다. 집사와 고객 간의 대화 흐름 속에서 감사·사과·안내 등 다양한 상황에 맞는 이모티콘을 사용할 수 있어, 텍스트만으로는 전달하기 어려운 감정과 뉘앙스를 보다 친근하고 생동감 있게 표현할 수 있도록 하였습니다.</p>
+      </div>
+    </div>
+
+    <div class="img-outer">
+      <div class="img-frame"><img src="../images/kimzipsa17.jpg" alt="Image K"></div>
+      <p class="img-caption">Emoticon</p>
+    </div>
+
+    <div class="text-wrap">
+      <nav class="proj-nav" aria-label="프로젝트 이동">
+        <div class="pn-item prev">
+          <a href="startup.html">
+            <span class="pn-arrow">←</span>
+            <span class="pn-label">이전 프로젝트</span>
+            <span class="pn-name">스타트업 이름</span>
+          </a>
+        </div>
+        <div class="pn-item next">
+          <a href="freelance.html">
+            <span class="pn-arrow">→</span>
+            <span class="pn-label">다음 프로젝트</span>
+            <span class="pn-name">프리랜서</span>
+          </a>
+        </div>
+      </nav>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="text-wrap">
+      <div class="footer-inner">
+        <span class="footer-copy">&copy; 2026 Jaein Min.</span>
+        <ul class="footer-links">
+          <li><a href="https://www.instagram.com/janem1n/" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="https://linkedin.com/" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href="https://drive.google.com/file/d/1FS4FL3Ozoogj-3Ti-RuVPRnmwaTuRskZ/view?usp=drive_link" target="_blank" rel="noopener">Resume</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/toc.js"></script>
+  <script src="../js/lightbox.js"></script>
+  <script src="../data/projects.js"></script>
+  <script src="../js/proj-nav.js"></script>
+  <script src="../js/protect.js"></script>
+</body>
+</html>

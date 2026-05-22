@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>잔디 컨텐츠 디자인</title>
+  <link rel="icon" href="../favicon.png" />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black: #0a0a0a; --gray: #888; --light-gray: #ebebeb; --white: #fff;
+      --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-serif: "Georgia", "Times New Roman", serif;
+    }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body { background: var(--white); color: var(--black); font-family: var(--font-sans); font-weight: 400; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+    nav { position: sticky; top: 0; background: rgba(255,255,255,0.82); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 100; will-change: transform; }
+    .nav-inner { max-width: 720px; margin: 0 auto; padding: 0 24px; height: 52px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { font-size: 0.9375rem; font-weight: 600; letter-spacing: -0.01em; }
+    .nav-back { font-size: 0.8125rem; color: var(--gray); transition: color 0.15s; }
+    .nav-back:hover { color: var(--black); text-decoration: none; }
+
+    .text-wrap { max-width: 720px;  margin: 0 auto; padding: 0 24px; }
+    .img-outer  { max-width: 1000px; margin: 56px auto; padding: 0 24px; }
+
+    .toc-sidebar { display: none; position: fixed; top: 100px; left: calc(50% + 528px); width: 180px; z-index: 50; transform: translateZ(0); will-change: transform; }
+    @media (min-width: 1400px) { .toc-sidebar { display: flex; flex-direction: column; max-height: calc(100vh - 120px); } }
+    .toc-label { font-size: 0.625rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: #888888; margin-bottom: 12px; }
+    .toc-scroll-wrap { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+    .toc-list { list-style: none; flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: none; }
+    .toc-list::-webkit-scrollbar { display: none; }
+    .toc-list li + li { margin-top: 2px; }
+    .toc-link { display: block; font-size: 0.75rem; line-height: 1.55; color: var(--gray); padding: 3px 0 3px 12px; border-left: 1.5px solid transparent; transition: color 0.15s, border-color 0.15s; }
+    .toc-link:hover { color: var(--black); text-decoration: none; }
+    .toc-link.active { color: var(--black); border-left-color: var(--black); }
+
+    .proj-header { padding: 72px 0 52px; border-bottom: 1px solid var(--light-gray); }
+    .proj-label  { font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray); margin-bottom: 20px; }
+    .proj-title  { font-family: var(--font-sans); font-size: 20px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.05; margin-bottom: 16px; }
+    .proj-sub    { font-size: 1rem; color: var(--gray); line-height: 1.65; }
+
+    .proj-meta { display: flex; gap: 48px; padding: 32px 0; border-bottom: 1px solid var(--light-gray); flex-wrap: wrap; }
+    .proj-meta > div { flex: 1; min-width: 132px; }
+    .meta-key  { font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray); margin-bottom: 4px; }
+    .meta-val  { font-size: 0.9375rem; }
+
+    .prose { font-size: 1.0625rem; line-height: 1.875; color: #1a1a1a; padding: 52px 0 0; }
+    .prose p + p { margin-top: 1.4em; }
+    .prose h2 { font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray); margin-bottom: 20px; scroll-margin-top: 80px; }
+
+    .img-frame  { border-radius: 8px; border: 1px solid rgba(0,0,0,0.07); overflow: hidden; }
+    .img-frame img { width: 100%; height: auto; display: block; }
+    .img-grid   { display: grid; grid-template-columns: 1fr 1fr;     gap: 8px; }
+    .img-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+
+    .img-ph { width: 100%; aspect-ratio: 7/5; background: #f2f2f2; display: flex; align-items: center; justify-content: center; }
+    .img-ph.sq   { aspect-ratio: 7/5; }
+    .img-ph.tall { aspect-ratio: 7/5; }
+    .img-ph span { font-size: 0.6875rem; letter-spacing: 0.08em; text-transform: uppercase; color: #c0c0c0; user-select: none; }
+    .img-caption { font-size: 0.8125rem; color: var(--gray); margin-top: 10px; }
+
+    .proj-nav { display: flex; border-top: 1px solid var(--light-gray); margin-top: 80px; }
+    .pn-item  { flex: 1; padding: 32px 0 72px; display: flex; flex-direction: column; gap: 6px; }
+    .pn-item.next { text-align: right; }
+    .pn-arrow { font-size: 1.125rem; color: var(--gray); line-height: 1; }
+    .pn-label { font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray); }
+    .pn-name  { font-size: 0.9375rem; font-weight: 500; letter-spacing: -0.01em; }
+    .pn-item a { display: flex; flex-direction: column; gap: 6px; }
+    .pn-item a:hover { text-decoration: none; }
+    .pn-item a:hover .pn-name { opacity: 0.6; }
+    .pn-item.next a { align-items: flex-end; }
+
+    footer { padding: 0 0 24px; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; border-top: 1px solid var(--light-gray); padding-top: 16px; }
+    .footer-copy  { font-size: 0.8125rem; color: var(--gray); }
+    .footer-links { display: flex; gap: 20px; list-style: none; }
+    .footer-links a { font-size: 0.8125rem; color: var(--gray); }
+    .footer-links a:hover { color: var(--black); text-decoration: none; }
+
+    @media (max-width: 680px) {
+      .img-outer { padding: 0 16px; }
+      .img-grid, .img-grid-3 { grid-template-columns: 1fr; }
+      .proj-meta { gap: 20px; }
+      
+      .pn-item { padding: 32px 0 40px; }
+    }
+  </style>
+</head>
+<body>
+
+  <aside class="toc-sidebar" aria-label="목차">
+    <p class="toc-label">On this page</p>
+    <ul class="toc-list">
+    </ul>
+  </aside>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="../index.html" class="nav-logo">Jaein Works.</a>
+      <a href="../project.html" class="nav-back">← Project</a>
+    </div>
+  </nav>
+
+  <main>
+
+    <div class="text-wrap">
+      <header class="proj-header">
+        <p class="proj-label">Project</p>
+        <h1 class="proj-title">잔디 컨텐츠 디자인</h1>
+        <p class="proj-sub">UIUX 프로덕트 디자인을 메인 직무로 담당하면서, 1인 디자이너 환경 특성상 마케팅 컨텐츠 디자인까지 전방위적으로 커버하며 제품이 사용자에게 닿는 모든 접점을 직접 설계하고 실행하였습니다. 이를 통해 프로덕트의 내부 경험은 물론, 브랜드가 외부로 전달되는 방식까지 일관되게 가져갈 수 있었습니다.</p>
+      </header>
+      <div class="proj-meta">
+        <div><div class="meta-key">기간</div><div class="meta-val">2024.4 — 2026.4</div></div>
+        <div><div class="meta-key">분야</div><div class="meta-val">Contents Design</div></div>
+        <div><div class="meta-key">도구</div><div class="meta-val">Figma</div></div>
+        <div><div class="meta-key">기여도</div><div class="meta-val">100%</div></div>
+      </div>
+    </div>
+
+    <div class="text-wrap">
+      <div class="prose">
+        <h2 id="overview">Overview</h2>
+        <p>잔디의 새로운 AI 기능을 효과적으로 알리기 위해 웹사이트 비주얼부터 앱 스토어 스크린샷, 소셜 미디어 마케팅 에셋까지 통합적인 컨텐츠 디자인을 진행하였습니다. 단순히 정보를 전달하는 것을 넘어, 기업 고객들에게 잔디가 단순한 메신저를 넘어 '잠재력을 깨우는 AI 협업 플랫폼'이라는 가치를 경험할 수 있도록 브랜드 접점을 강화하였습니다.</p>
+      </div>
+    </div>
+
+    <div class="img-outer">
+      <div class="img-frame"><img src="../images/cnts1.jpg" alt="Overview"></div>
+    </div>
+
+    <div class="text-wrap">
+      <div class="prose">
+        <h2 id="local">Image for website</h2>
+        <p>잔디 웹사이트에 활용되는 기능 소개 이미지를 제작하였습니다. 지식베이스·토픽 요약·스레드 요약·번역 등 AI 기능(Sprinkler)별로 실제 사용 맥락을 담은 UI 컷을 제작하여, 방문자가 기능의 효용을 직관적으로 이해할 수 있도록 하였습니다. 웹사이트 메인 비주얼과도 일관된 톤으로 연결되어 브랜드 경험을 자연스럽게 이어갑니다.</p>
+      </div>
+    </div>
+
+    <div class="img-outer">
+      <div class="img-grid">
+        <div class="img-frame"><img src="../images/cnts2-1.jpg" alt="Image for website 1"></div>
+        <div class="img-frame"><img src="../images/cnts2-2.jpg" alt="Image for website 2"></div>
+      </div>
+      <p class="img-caption">랜딩페이지 메인</p>
+    </div>
+
+    <div class="img-outer">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div class="img-frame"><img src="../images/cnts3-1.jpg" alt="Image for website 3"></div>
+        <div class="img-frame"><img src="../images/cnts3-2.jpg" alt="Image for website 4"></div>
+      </div>
+      <p class="img-caption">랜딩페이지 기능 설명</p>
+    </div>
+
+    <div class="text-wrap">
+      <div class="prose">
+        <h2 id="portfolio">App Store Screenshots</h2>
+        <p>기존 앱스토어 스크린샷이 협업툴로서의 기능적 강점을 전면에 내세웠던 것과 달리, 이번 리뉴얼에서는 AI 기능을 중심으로 메시지를 재편하였습니다. 실시간 AI 질문 답변, 토픽 요약, 파일 분석 등 Sprinkler AI가 업무 전반에 자연스럽게 녹아드는 모습을 각 화면에 담아, 단순한 소통 도구를 넘어 AI로 업무 역량 자체를 강화해주는 협업 플랫폼으로서의 새로운 포지셔닝을 전달하고자 하였습니다.</p>
+      </div>
+    </div>
+
+    <div class="img-outer">
+      <div class="img-frame"><img src="../images/cnts4.jpg" alt="App Store Screenshots 1"></div>
+      <p class="img-caption">Mobile App Screenshot</p>
+    </div>
+
+    <div class="img-outer">
+      <div class="img-frame"><img src="../images/cnts5.jpg" alt="App Store Screenshots 2"></div>
+      <p class="img-caption">Tablet App Screenshot</p>
+    </div>
+
+    <div class="text-wrap">
+      <div class="prose">
+        <h2 id="print">Marketing Assets</h2>
+        <p>Sprinkler AI 로고 상단의 곡선 라인을 디자인 모티프로 활용하여, AI의 유연함과 무한한 확장성을 시각화했습니다. 부드럽게 퍼져나가는 그래디언트 곡선은 잔디와 AI가 결합하여 선사하는 끊임없는 협업의 흐름을 상징합니다.</p>
+      </div>
+    </div>
+
+    <div class="img-outer">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div class="img-frame"><img src="../images/cnts6-1.jpg" alt="Marketing Assets 1"></div>
+        <div class="img-frame"><img src="../images/cnts6-2.jpg" alt="Marketing Assets 2"></div>
+      </div>
+      <p class="img-caption">SNS Cover(좌) / OG Image(우)</p>
+    </div>
+
+    <div class="text-wrap">
+      <nav class="proj-nav" aria-label="프로젝트 이동">
+        <div class="pn-item prev">
+          <a href="agency.html">
+            <span class="pn-arrow">←</span>
+            <span class="pn-label">이전 프로젝트</span>
+            <span class="pn-name">에이전시 이름</span>
+          </a>
+        </div>
+        <div class="pn-item next">
+          <a href="jandi.html">
+            <span class="pn-arrow">→</span>
+            <span class="pn-label">다음 프로젝트</span>
+            <span class="pn-name">회사 이름</span>
+          </a>
+        </div>
+      </nav>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="text-wrap">
+      <div class="footer-inner">
+        <span class="footer-copy">&copy; 2026 Jaein Min.</span>
+        <ul class="footer-links">
+          <li><a href="https://www.instagram.com/janem1n/" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="https://linkedin.com/" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href="https://drive.google.com/file/d/1FS4FL3Ozoogj-3Ti-RuVPRnmwaTuRskZ/view?usp=drive_link" target="_blank" rel="noopener">Resume</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/toc.js"></script>
+  <script src="../js/lightbox.js"></script>
+  <script src="../data/projects.js"></script>
+  <script src="../js/proj-nav.js"></script>
+  <script src="../js/protect.js"></script>
+</body>
+</html>

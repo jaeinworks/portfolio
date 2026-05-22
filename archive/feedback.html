@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>좋은 피드백이란 무엇인가 — 재인</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black: #0a0a0a; --gray: #888; --light-gray: #d8d8d8; --white: #ffffff;
+      --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-serif: "Georgia", "Times New Roman", serif;
+    }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body { background: var(--white); color: var(--black); font-family: var(--font-sans); font-weight: 400; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    a:hover { text-decoration: underline; text-underline-offset: 3px; }
+    .container { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+
+    nav { position: sticky; top: 0; background: rgba(255,255,255,0.82); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 100; }
+    .nav-inner { max-width: 720px; margin: 0 auto; padding: 0 24px; height: 52px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { font-size: 0.9375rem; font-weight: 600; letter-spacing: -0.01em; }
+    .nav-back { font-size: 0.8125rem; color: var(--gray); }
+    .nav-back:hover { color: var(--black); text-decoration: none; }
+
+    .article-header { padding: 72px 0 48px; border-bottom: 1px solid var(--light-gray); }
+    .article-label { font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray); margin-bottom: 20px; }
+    .article-title { font-family: var(--font-serif); font-size: clamp(1.625rem, 5vw, 2.5rem); font-weight: 400; letter-spacing: -0.025em; line-height: 1.2; margin-bottom: 20px; }
+    .article-date { font-size: 0.875rem; color: var(--gray); }
+
+    .article-body { padding: 56px 0 80px; font-size: 1.0625rem; line-height: 1.9; color: #1a1a1a; max-width: 640px; }
+    .article-body p { margin-bottom: 1.5em; }
+    .article-body h2 { font-family: var(--font-sans); font-size: 1rem; font-weight: 600; letter-spacing: -0.01em; margin: 2.4em 0 0.8em; }
+    .article-body blockquote { border-left: 2px solid var(--light-gray); padding-left: 20px; color: var(--gray); margin: 1.8em 0; font-style: italic; }
+
+    footer { padding: 40px 0 56px; border-top: 1px solid var(--light-gray); }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .footer-copy { font-size: 0.8125rem; color: var(--gray); }
+    .footer-links { display: flex; gap: 20px; list-style: none; }
+    .footer-links a { font-size: 0.8125rem; color: var(--gray); }
+    .footer-links a:hover { color: var(--black); text-decoration: none; }
+    @media (max-width: 600px) { .footer-inner { flex-direction: column; align-items: flex-start; } }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="../index.html" class="nav-logo">Jaein Works.</a>
+      <a href="../index.html#archive" class="nav-back">← Archive</a>
+    </div>
+  </nav>
+
+  <main class="container">
+
+    <header class="article-header">
+      <p class="article-label">Archive</p>
+      <h1 class="article-title">좋은 피드백이란 무엇인가</h1>
+      <p class="article-date">2023. 09</p>
+    </header>
+
+    <div class="article-body">
+      <p>
+        디자인 리뷰에서 "이거 좀 이상한 것 같아요"라는 피드백을 받아본 적이
+        있다면 그 막막함을 알 것이다. 문제는 알겠는데, 무엇이 왜 이상한지
+        모르면 어디서부터 수정해야 할지 알 수 없다.
+      </p>
+
+      <h2>피드백은 관찰, 해석, 제안으로 나뉜다</h2>
+      <p>
+        좋은 피드백은 이 세 가지를 명확히 구분한다. "이 버튼이 텍스트와 너무
+        가깝게 붙어 있어요(관찰). 그래서 클릭 영역이 좁아 보이는 것 같아요(해석).
+        패딩을 조금 늘려보면 어떨까요(제안)?"처럼.
+      </p>
+      <p>
+        셋 다 있을 필요는 없다. 하지만 적어도 하나는 있어야 한다. 관찰만 해도
+        충분한 경우가 많고, 제안 없이 해석만 공유해도 디자이너가 알아서
+        방향을 잡을 수 있다.
+      </p>
+
+      <h2>솔루션이 아니라 문제를 공유해야 한다</h2>
+      <p>
+        피드백 주는 사람이 솔루션을 가져오면 디자이너는 선택지가 줄어든다.
+        "이렇게 바꿔주세요" 대신 "이 부분에서 사용자가 혼란스러울 것 같아요"가
+        훨씬 생산적이다. 문제를 공유하면 더 나은 해결책이 나올 수 있다.
+      </p>
+
+      <blockquote>
+        피드백의 목적은 내 의견을 반영하는 것이 아니라 더 나은 결과물을
+        만드는 것이다.
+      </blockquote>
+
+      <h2>피드백을 잘 받는 것도 기술이다</h2>
+      <p>
+        피드백을 잘 주는 것만큼, 잘 받는 것도 중요하다. 방어적으로 반응하면
+        상대방은 다음에 피드백 주기를 꺼린다. "왜 그렇게 느끼셨어요?"라고
+        되물으면 더 많은 정보를 얻을 수 있다.
+      </p>
+      <p>
+        모든 피드백을 반영해야 하는 건 아니다. 하지만 모든 피드백을 진지하게
+        들어야 한다. 그 둘의 차이가 좋은 디자이너를 만드는 것 같다.
+      </p>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <span class="footer-copy">&copy; 2026 Jaein Min.</span>
+        <ul class="footer-links">
+          <li><a href="mailto:j.g.min830@gmail.com">j.g.min830@gmail.com</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

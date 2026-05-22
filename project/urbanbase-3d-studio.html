@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>스타트업 이름</title>
+  <link rel="icon" href="../favicon.png" />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black: #0a0a0a; --gray: #888; --light-gray: #ebebeb; --white: #fff;
+      --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-serif: "Georgia", "Times New Roman", serif;
+    }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body { background: var(--white); color: var(--black); font-family: var(--font-sans); font-weight: 400; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+    nav { position: sticky; top: 0; background: rgba(255,255,255,0.82); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 100; will-change: transform; }
+    .nav-inner { max-width: 720px; margin: 0 auto; padding: 0 24px; height: 52px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { font-size: 0.9375rem; font-weight: 600; letter-spacing: -0.01em; }
+    .nav-back { font-size: 0.8125rem; color: var(--gray); transition: color 0.15s; }
+    .nav-back:hover { color: var(--black); text-decoration: none; }
+
+    .text-wrap { max-width: 720px;  margin: 0 auto; padding: 0 24px; }
+    .img-outer  { max-width: 1000px; margin: 56px auto; padding: 0 24px; }
+
+    .toc-sidebar { display: none; position: fixed; top: 100px; left: calc(50% + 528px); width: 180px; z-index: 50; transform: translateZ(0); will-change: transform; }
+    @media (min-width: 1400px) { .toc-sidebar { display: flex; flex-direction: column; max-height: calc(100vh - 120px); } }
+    .toc-label { font-size: 0.625rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: #888888; margin-bottom: 12px; }
+    .toc-scroll-wrap { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+    .toc-list { list-style: none; flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: none; }
+    .toc-list::-webkit-scrollbar { display: none; }
+    .toc-list li + li { margin-top: 2px; }
+    .toc-link { display: block; font-size: 0.75rem; line-height: 1.55; color: var(--gray); padding: 3px 0 3px 12px; border-left: 1.5px solid transparent; transition: color 0.15s, border-color 0.15s; }
+    .toc-link:hover { color: var(--black); text-decoration: none; }
+    .toc-link.active { color: var(--black); border-left-color: var(--black); }
+
+    .proj-header { padding: 72px 0 52px; border-bottom: 1px solid var(--light-gray); }
+    .proj-label  { font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray); margin-bottom: 20px; }
+    .proj-title  { font-family: var(--font-sans); font-size: 20px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.05; margin-bottom: 16px; }
+    .proj-sub    { font-size: 1rem; color: var(--gray); line-height: 1.65; }
+
+    .proj-meta { display: flex; gap: 48px; padding: 32px 0; border-bottom: 1px solid var(--light-gray); flex-wrap: wrap; }
+    .proj-meta > div { flex: 1; min-width: 132px; }
+    .meta-key  { font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray); margin-bottom: 4px; }
+    .meta-val  { font-size: 0.9375rem; }
+
+    .prose { font-size: 1.0625rem; line-height: 1.875; color: #1a1a1a; padding: 52px 0 0; }
+    .prose p + p { margin-top: 1.4em; }
+    .prose h2 { font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray); margin-bottom: 20px; scroll-margin-top: 80px; }
+    .prose h1 { font-family: var(--font-sans); font-size: 20px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.05; margin-bottom: 16px; }
+
+    .img-frame  { border-radius: 8px; border: 1px solid rgba(0,0,0,0.07); overflow: hidden; }
+    .img-frame img { width: 100%; height: auto; display: block; }
+    .img-grid   { display: grid; grid-template-columns: 1fr 1fr;     gap: 8px; }
+    .img-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+
+    .img-ph { width: 100%; aspect-ratio: 7/5; background: #f2f2f2; display: flex; align-items: center; justify-content: center; }
+    .img-ph.sq   { aspect-ratio: 7/5; }
+    .img-ph.tall { aspect-ratio: 7/5; }
+    .img-ph span { font-size: 0.6875rem; letter-spacing: 0.08em; text-transform: uppercase; color: #c0c0c0; user-select: none; }
+    .img-caption { font-size: 0.8125rem; color: var(--gray); margin-top: 10px; }
+
+    .proj-nav { display: flex; border-top: 1px solid var(--light-gray); margin-top: 80px; }
+    .pn-item  { flex: 1; padding: 32px 0 72px; display: flex; flex-direction: column; gap: 6px; }
+    .pn-item.next { text-align: right; }
+    .pn-arrow { font-size: 1.125rem; color: var(--gray); line-height: 1; }
+    .pn-label { font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray); }
+    .pn-name  { font-size: 0.9375rem; font-weight: 500; letter-spacing: -0.01em; }
+    .pn-item a { display: flex; flex-direction: column; gap: 6px; }
+    .pn-item a:hover { text-decoration: none; }
+    .pn-item a:hover .pn-name { opacity: 0.6; }
+    .pn-item.next a { align-items: flex-end; }
+
+    footer { padding: 0 0 24px; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; border-top: 1px solid var(--light-gray); padding-top: 16px; }
+    .footer-copy  { font-size: 0.8125rem; color: var(--gray); }
+    .footer-links { display: flex; gap: 20px; list-style: none; }
+    .footer-links a { font-size: 0.8125rem; color: var(--gray); }
+    .footer-links a:hover { color: var(--black); text-decoration: none; }
+
+    @media (max-width: 680px) {
+      .img-outer { padding: 0 16px; }
+      .img-grid, .img-grid-3 { grid-template-columns: 1fr; }
+      .proj-meta { gap: 20px; }
+      
+      .pn-item { padding: 32px 0 40px; }
+    }
+  </style>
+</head>
+<body>
+
+  <aside class="toc-sidebar" aria-label="목차">
+    <p class="toc-label">On this page</p>
+    <ul class="toc-list"></ul>
+  </aside>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="../index.html" class="nav-logo">Jaein Works.</a>
+      <a href="../project.html" class="nav-back">← Project</a>
+    </div>
+  </nav>
+
+  <main>
+
+    <div class="text-wrap">
+      <header class="proj-header">
+        <p class="proj-label">Project</p>
+        <h1 class="proj-title">Urbanbase 3D Studio</h1>
+        <p class="proj-sub">3D 인테리어 시뮬레이션 기반 SaaS 프로덕트의 UIUX 설계를 담당하며, 웹·앱 환경 전반의 사용자 경험 개선과 디자인 시스템 구축을 주도했습니다.</p>
+      </header>
+      <div class="proj-meta">
+        <div><div class="meta-key">기간</div><div class="meta-val">2021.12 — 2023.11</div></div>
+        <div><div class="meta-key">분야</div><div class="meta-val">Product Design</div></div>
+        <div><div class="meta-key">도구</div><div class="meta-val">Figma</div></div>
+        <div><div class="meta-key">기여도</div><div class="meta-val">85%</div></div>
+      </div>
+    </div>
+
+    <div class="text-wrap">
+      <div class="prose">
+        <h2 id="overview">Overview</h2>
+        <p>3D 스튜디오는 SaaS 서비스로, 개인과 기업 회원에게 제공되며, 유저들에게 손쉽게 원하는 공간을 스타일링해 볼 수 있는 툴을 제공합니다. 3D 뷰어를 통해 다양한 아이템을 디테일하게 확인할 수 있으며, 지도를 통해 자신의 집의 도면을 빠르게 찾아 스타일링을 시도해 볼 수 있습니다. 또는 직접 도면을 그려 상상 속의 공간을 3D로 구현해 볼 수 있으며, 완성한 공간 스타일링을 게시하여 다른 유저들과 커뮤니케이션할 수 있습니다.</p>
+      </div>
+    </div>
+
+    <div class="img-outer">
+      <div class="img-frame">
+        <img src="../images/urbanbase1.jpg" alt="Urbanbase 3D Studio">
+      </div>
+    </div>
+
+    <div class="text-wrap">
+      <div class="prose">
+        <h2 id="research">사용자 리서치</h2>
+        <p>Urbanbase 3D Studio를 활용하는 B2B 사용자 및 내부 팀 멤버들의 피드백을 토대로, 현재 제공 중인 서비스의 불편한 점을 식별하고자 하였습니다. 이를 통해 기능 단위로 프로젝트를 구성할 수 있고 프로젝트의 우선 순위를 정하는데 도움이 되었습니다.</p>
+      </div>
+    </div>
+
+    <div class="img-outer">
+      <div class="img-grid">
+        <div class="img-frame"><img src="../images/urbanbase2-1.jpg" alt="User Research 1"></div>
+        <div class="img-frame"><img src="../images/urbanbase2-2.jpg" alt="User Research 2"></div>
+      </div>
+      <p class="img-caption">Voice of Customer(좌) / Backlog(우)</p>
+    </div>
+
+    <div class="text-wrap">
+      <div class="prose">
+        <h2 id="section-02">To-Be Solutions</h2>
+        <p>앞서 살펴본 문제들을 해결하기 위해 여섯 가지 TO-BE 솔루션을 담았습니다. 랜딩페이지와 탐색 경험을 개선하고, 지도 기능을 단순화하는 한편, 마이페이지와 에디터 내 UX도 함께 고도화했습니다. 그리고 이 모든 변화를 일관성 있게 뒷받침할 디자인 시스템까지 구축하여, 사용자가 플랫폼을 더 직관적이고 편하게 쓸 수 있는 환경을 만드는 것을 목표로 했습니다.</p>
+      </div>
+    </div>
+    <div class="img-outer">
+      <div class="img-frame"><img src="../images/urbanbase3.jpg" alt="To-Be Solutions"></div>
+    </div>
+
+    <div class="text-wrap">
+      <div class="prose">
+        <h2 id="section-03">UX Goal</h2>
+        <p>사용자 경험의 목표는 "유저가 원하는 아이템으로 가상의 공간을 만들고 홍보할 수 있게 한다. 다른 유저들이 만든 가상의 공간을 통해 영감을 받고 여정을 시작할 수 있도록 한다. 막연한 상상의 공간을 현실화할 수 있는 단계로서 사실감을 부여한다. 이 가상의 공간들은 추억이 되고, 현재가 되고, 미래가 되는 과정을 제공한다."로 정하여 진행하였습니다.</p>
+      </div>
+    </div>
+    <div class="img-outer">
+      <div class="img-frame"><img src="../images/urbanbase4.jpg" alt="UX Goal"></div>
+    </div>
+
+    <div class="text-wrap">
+      <div class="prose">
+        <h2 id="section-04">Design Style Guide</h2>
+        <p>Helvetica, Spoqa와 Futura 폰트는 Regular에서부터 Bold까지 넓은 범위를 제공하여 가독성과 범용성을 높여 유저의 눈에 익숙하도록 하였습니다.</p>
+      </div>
+    </div>
+    <div class="img-outer">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div class="img-frame"><img src="../images/urbanbase5-1.jpg" alt="Design Style Guide 1"></div>
+        <div class="img-frame"><img src="../images/urbanbase5-2.jpg" alt="Design Style Guide 2"></div>
+      </div>
+      <p class="img-caption">Style Guide(좌) / Components(우)</p>
+    </div>
+
+    <div class="text-wrap">
+      <div class="prose">
+        <h2 id="section-05">Lobby page</h2>
+        <p>각 기업이 원하는 파노라마 뷰어를 상단에 효과적으로 노출하고, 360도 자동 회전을 통해 몰입도 높은 시각적 경험을 제공합니다. 뷰어 내에 태그된 아이템은 부가 정보를 함께 전달하여, 사용자가 마음에 드는 제품을 즉시 확인하고 구매로 자연스럽게 이어질 수 있도록 유도합니다.</p>
+      </div>
+    </div>
+    <div class="img-outer">
+      <div class="img-frame"><img src="../images/urbanbase6.jpg" alt="Lobby page"></div>
+    </div>
+
+    <div class="text-wrap">
+      <div class="prose">
+        <p>특정 아이템을 강조하여 홍보하고 싶을 때, 기업이 해당 아이템을 메인 화면에 노출할 수 있도록 하였습니다. 사용자가 아이템을 호버할 경우, 해당 아이템의 AR Viewer를 실행할 수 있는 QR 코드가 나타납니다.</p>
+      </div>
+    </div>
+    <div class="img-outer">
+      <div class="img-frame"><img src="../images/urbanbase7.jpg" alt="Lobby page 2"></div>
+    </div>
+
+    <div class="text-wrap">
+      <div class="prose">
+        <h2 id="section-07">Explore page</h2>
+        <p>아이템 탐색 페이지에서는 각 기업이 설정한 카테고리별 3D 아이템 목록을 제공하며, 스타일링 탐색 페이지에서는 유저들이 게시한 다양한 3D 스타일링을 검색 기능을 통해 손쉽게 찾아볼 수 있습니다.</p>
+      </div>
+    </div>
+    <div class="img-outer">
+      <div class="img-frame"><img src="../images/urbanbase8.jpg" alt="Explore page"></div>
+    </div>
+
+    <div class="text-wrap">
+      <div class="prose">
+        <h2 id="section-08">Detail 3D Viewer page : Styling</h2>
+        <p>3D 스타일링 상세 페이지는 좌측의 넓은 뷰어 영역에서 마우스로 직접 제어하며 실감 나게 확인할 수 있고, 우측에는 상세 정보와 코멘트를 단계적으로 제공합니다. 또한 여러 스크린샷 중 하나를 클릭하면 해당 각도의 3D 뷰어로 즉시 전환되어 다양한 시점을 자유롭게 탐색할 수 있습니다.</p>
+      </div>
+    </div>
+    <div class="img-outer">
+      <div class="img-frame"><img src="../images/urbanbase9.jpg" alt="Detail 3D Viewer: Styling"></div>
+    </div>
+
+    <div class="text-wrap">
+      <div class="prose">
+        <h2 id="section-09">Detail 3D Viewer page : Item</h2>
+        <p>아이템 상세 페이지 역시 3D 아이템 뷰어가 넓은 좌측 영역에 제공되어, 사용자는 큰 화면에서 마우스를 직접 제어하여 상세한 아이템의 3D 디테일을 실감나게 확인할 수 있습니다. 우측 영역에는 아이템의 상세 정보가 제공되며, 구매 CTA 버튼을 클릭하면 스토어 페이지와 연동됩니다.</p>
+      </div>
+    </div>
+    <div class="img-outer">
+      <div class="img-frame"><img src="../images/urbanbase10.jpg" alt="Detail 3D Viewer: Item"></div>
+    </div>
+
+    <div class="text-wrap">
+      <div class="prose">
+        <h2 id="section-10">Map page</h2>
+        <p>지도 탐색 화면은 좌측에 검색 필터와 도면 목록·상세 정보를, 우측에 맵 탐색 영역을 배치하여 지도를 가리지 않고 원활하게 탐색할 수 있도록 설계하였으며, 도면에서 스타일링까지 자연스러운 흐름이 이어지도록 고려하였습니다. 지도 위 도면 핀은 상태값에 따라 디자인을 구분하고 필수 정보만 노출하여 시각적 복잡도를 최소화하였습니다.</p>
+      </div>
+    </div>
+    <div class="img-outer">
+      <div class="img-frame"><img src="../images/urbanbase11.jpg" alt="Map page"></div>
+    </div>
+
+    <div class="text-wrap">
+      <div class="prose">
+        <h2 id="section-11">My page</h2>
+        <p>유저의 대시보드 화면인 '마이 스튜디오'는 유저가 직접 제작한 3D 스타일링과 도면이 저장되고, 스크랩한 3D 스타일링, 도면, 그리고 아이템 목록을 확인할 수 있는 공간입니다. 또한, 다른 유저의 스튜디오를 탐색하거나 팔로우를 통해 서로 소통할 수 있습니다.</p>
+      </div>
+    </div>
+    <div class="img-outer">
+      <div class="img-frame"><img src="../images/urbanbase12.jpg" alt="My page"></div>
+    </div>
+
+    <div class="text-wrap">
+      <div class="prose">
+        <h2 id="section-12">3D Styling Editor</h2>
+        <p>3D 스타일링 에디터는 좌측 대메뉴에서 카테고리 탐색·검색·필터 기능을 통해 원하는 가구와 마감재를 빠르게 찾아 배치할 수 있으며, 우측 툴 영역은 에디터 설정과 화면 제어를 담당하되 뷰어 영역과의 간섭을 최소화하도록 설계하였습니다.</p>
+      </div>
+    </div>
+    <div class="img-outer">
+      <div class="img-frame"><img src="../images/urbanbase13.jpg" alt="3D Styling Editor"></div>
+    </div>
+
+    <div class="text-wrap">
+      <div class="prose">
+        <p>아이템 배치 전 좌측 카테고리 탭에서 상세 정보를 확인하고 3D View로 미리볼 수 있으며, 배치 후에는 우측 패널에서 색상·사이즈·회전 등 세부 값을 자유롭게 조절할 수 있습니다.</p>
+      </div>
+    </div>
+    <div class="img-outer">
+      <div class="img-frame"><img src="../images/urbanbase14.jpg" alt="3D Styling Editor 2"></div>
+    </div>
+
+    <div class="text-wrap">
+      <div class="prose">
+        <p>원하는 아이템이 없을 경우 커스텀 박스와 데스크를 활용해 직접 색상과 디자인을 설정하여 배치할 수 있으며, 일반 아이템과 동일한 애셋 컨트롤러 메뉴를 통해 위치와 방향도 손쉽게 조절할 수 있습니다.</p>
+      </div>
+    </div>
+    <div class="img-outer">
+      <div class="img-frame"><img src="../images/urbanbase15.jpg" alt="3D Styling Editor 3"></div>
+    </div>
+
+    <div class="text-wrap">
+      <div class="prose">
+        <p>스크랩한 아이템과 배치한 아이템은 구분 탭으로 쉽게 확인할 수 있으며, 기업 계정의 경우 예상 견적서도 함께 제공됩니다. GNB 우측에는 스타일링 스크린샷 촬영·저장 및 나가기 기능을 배치하였습니다.</p>
+      </div>
+    </div>
+    <div class="img-outer">
+      <div class="img-frame"><img src="../images/urbanbase16.jpg" alt="3D Styling Editor 4"></div>
+    </div>
+
+    <div class="text-wrap">
+      <div class="prose">
+        <h2 id="section-16">Login / Join</h2>
+        <p>로그인은 상단 GNB를 통해 어디서든 접근 가능하며 레이어 팝업 형태로 제공됩니다. 팝업 디자인이 단조로워 보이지 않도록, 우측 영역에는 다른 유저들이 스타일링한 3D 스타일링의 썸네일 이미지와 게시글 제목을 함께 표시하여 다양한 컨텐츠를 보여주는 것으로 설계하였습니다.</p>
+      </div>
+    </div>
+    <div class="img-outer">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div class="img-frame"><img src="../images/urbanbase17-1.jpg" alt="Login / Join 1"></div>
+        <div class="img-frame"><img src="../images/urbanbase17-2.jpg" alt="Login / Join 2"></div>
+      </div>
+      <p class="img-caption">로그인 레이어 팝업(좌) / 회원가입(우)</p>
+    </div>
+
+    <div class="text-wrap">
+      <div class="prose">
+        <h2 id="section-17">Responsive Web</h2>
+        <p>Urbanbase 3D Studio는 모바일 환경에서도 원활하게 이용할 수 있는 반응형 서비스로 제공됩니다. 단, 아이템 목록과 스타일링 상세 조회는 모바일에서 지원하며, 직접 스타일링을 배치하는 에디터 기능은 보다 정밀한 작업 환경이 필요한 만큼 웹에서만 이용 가능합니다.</p>
+      </div>
+    </div>
+    <div class="img-outer">
+      <div class="img-frame"><img src="../images/urbanbase18.jpg" alt="Responsive Web"></div>
+    </div>
+
+    <div class="text-wrap">
+      <div class="prose">
+        <h2 id="section-18">App</h2>
+        <h1>Urbanbase 3D Studio Tablet</h1>
+        <p>태블릿 앱은 웹과 거의 동일한 기능을 제공하지만 몇 가지의 차이점이 있습니다. 태블릿 앱에서는 AR Viewer가 앱 자체에 탑재되어 있어 3D 아이템을 바로 증강현실로 확인할 수 있습니다. 또한, 여러 기업들의 3D Studio를 간편하게 변경하여 다양한 아이템을 가지고 3D 스타일링을 시도할 수 있습니다.</p>
+      </div>
+    </div>
+    <div class="img-outer">
+      <div class="img-frame"><img src="../images/urbanbase19.jpg" alt="App"></div>
+    </div>
+
+    <div class="text-wrap">
+      <div class="prose">
+        <h2 id="section-19">AR Viewer</h2>
+        <p>아이템 상세 페이지에서 AR Viewer를 실행하면 즉시 카메라 화면으로 전환되며, 선택한 3D 아이템을 실제 공간에 증강현실로 배치해볼 수 있습니다. 다양한 색상을 실시간으로 변경해볼 수 있고, 제스처 가이드를 통해 처음 사용하는 유저도 조작 방법을 직관적으로 이해할 수 있도록 하였습니다.</p>
+      </div>
+    </div>
+    <div class="img-outer">
+      <div class="img-frame"><img src="../images/urbanbase20.jpg" alt="AR Viewer"></div>
+    </div>
+
+    <div class="text-wrap">
+      <div class="prose">
+        <p>추후 해당 아이템을 구매할 때 참고 이미지로 활용할 수 있도록 촬영 기능을 제공하여 사용자가 마음에 드는 배치와 구도로 사진을 저장할 수 있도록 하였습니다.</p>
+      </div>
+    </div>
+    <div class="img-outer">
+      <div class="img-frame"><img src="../images/urbanbase21.jpg" alt="AR Viewer 2"></div>
+    </div>
+
+    <div class="text-wrap">
+      <div class="prose">
+        <h2 id="section-21">Profile</h2>
+        <p>좌측 GNB의 하단 프로필 이미지를 탭하면 프로필 정보가 팝업 형태로 표시됩니다. 계정 정보는 웹 서비스에서만 수정 가능하여 읽기 전용으로만 제공됩니다. 이 팝업에서는 추가로 언어 변경, 비밀번호 변경, 기업 3D 스튜디오 관리, 그리고 로그아웃 기능을 제공합니다.</p>
+      </div>
+    </div>
+    <div class="img-outer">
+      <div class="img-frame"><img src="../images/urbanbase22.jpg" alt="Profile"></div>
+    </div>
+
+    <div class="text-wrap">
+      <div class="prose">
+        <h2 id="section-22">Company Select, Setting</h2>
+        <p>설정 탭에서는 여러 가지 설정 옵션을 사용자가 조절할 수 있습니다. 좌측 GNB의 최상단 로고 원형 썸네일을 탭하면 다양한 기업 3D 스튜디오를 선택할 수 있는 화면이 상단에서 하단으로 트랜지션됩니다. 사용자가 최초로 기업을 추가할 때 해당 기업의 이용 약관 및 동의를 통해 기업 3D 스튜디오를 변경 할 수 있습니다.</p>
+      </div>
+    </div>
+    <div class="img-outer">
+      <div class="img-frame"><img src="../images/urbanbase23.jpg" alt="Company Select, Setting"></div>
+    </div>
+
+    <div class="text-wrap">
+      <div class="prose">
+        <h2 id="section-23">Design Guide Library (Foundation)</h2>
+        <p>디자이너가 여러 명이 함께 작업하는 구조였기 때문에, 기준이 없으면 동일한 화면도 각기 다른 방식으로 구현될 가능성이 높았습니다. 어반베이스는 신규 피처 비중이 큰 서비스였기 때문에, 초기부터 컴포넌트를 정의하며 구조를 함께 정리해나갈 수 있는 환경이었습니다. 이를 바탕으로 작업과 동시에 디자인 시스템을 구축해나갔습니다.</p>
+      </div>
+    </div>
+    <div class="img-outer">
+      <div class="img-frame"><img src="../images/urbanbase24.jpg" alt="Design Guide Library (Foundation)"></div>
+    </div>
+
+    <div class="text-wrap">
+      <div class="prose">
+        <h2 id="section-24">Design Guide Library (Component)</h2>
+        <p>신규 피처가 지속적으로 추가되면서 컴포넌트도 함께 확장되었습니다. 여러 디자이너가 병렬로 작업하는 환경에서 일관된 기준을 유지하기 위해, 기능과 상태를 사전에 정의하고 라이브러리로 관리했습니다. 이를 통해 담당자와 관계없이 일관된 결과를 유지할 수 있었습니다.</p>
+      </div>
+    </div>
+    <div class="img-outer">
+      <div class="img-frame"><img src="../images/urbanbase25.jpg" alt="Design Guide Library (Component)"></div>
+    </div>
+
+    <div class="text-wrap">
+      <div class="prose">
+        <h2 id="section-25">Wrapping up — Urbanbase 3D Studio</h2>
+        <h1>마무리</h1>
+        <p>3D 스튜디오 SaaS 서비스의 다양한 프로젝트와 운영 업무를 통해 내부 고객사의 다양한 요구와 백로그에 적극 대응하며 향상된 서비스를 제공하기 위해 노력했습니다. 이를 통해 사용성을 지속적으로 개선하고, 사용자의 유입 및 체류 시간을 증가시키는데 기여할 수 있었습니다. 이러한 노력을 통해 고객들에게 뛰어난 경험을 제공하여 서비스의 성과를 높일 수 있었습니다.</p>
+      </div>
+    </div>
+    <div class="img-outer">
+      <div class="img-frame"><img src="../images/urbanbase26.jpg" alt="Wrapping up"></div>
+      <p class="img-caption">페이지뷰 & 순 사용자 증감율 (좌) / 신규 사용자 & 재사용자 증감율(중앙) / 평균 참여 시간 증감율 (우)</p>
+    </div>
+
+    <div class="text-wrap">
+      <nav class="proj-nav" aria-label="프로젝트 이동">
+        <div class="pn-item prev">
+          <a href="jandi.html">
+            <span class="pn-arrow">←</span>
+            <span class="pn-label">이전 프로젝트</span>
+            <span class="pn-name">회사 이름</span>
+          </a>
+        </div>
+        <div class="pn-item next">
+          <a href="agency.html">
+            <span class="pn-arrow">→</span>
+            <span class="pn-label">다음 프로젝트</span>
+            <span class="pn-name">에이전시 이름</span>
+          </a>
+        </div>
+      </nav>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="text-wrap">
+      <div class="footer-inner">
+        <span class="footer-copy">&copy; 2026 Jaein Min.</span>
+        <ul class="footer-links">
+          <li><a href="https://www.instagram.com/janem1n/" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="https://linkedin.com/" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href="https://drive.google.com/file/d/1FS4FL3Ozoogj-3Ti-RuVPRnmwaTuRskZ/view?usp=drive_link" target="_blank" rel="noopener">Resume</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/toc.js"></script>
+  <script src="../js/lightbox.js"></script>
+  <script src="../data/projects.js"></script>
+  <script src="../js/proj-nav.js"></script>
+  <script src="../js/protect.js"></script>
+</body>
+</html>

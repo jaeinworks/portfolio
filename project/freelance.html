@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>프리랜서</title>
+  <link rel="icon" href="../favicon.png" />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black: #0a0a0a; --gray: #888; --light-gray: #ebebeb; --white: #fff;
+      --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-serif: "Georgia", "Times New Roman", serif;
+    }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body { background: var(--white); color: var(--black); font-family: var(--font-sans); font-weight: 400; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+    nav { position: sticky; top: 0; background: rgba(255,255,255,0.82); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 100; will-change: transform; }
+    .nav-inner { max-width: 720px; margin: 0 auto; padding: 0 24px; height: 52px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { font-size: 0.9375rem; font-weight: 600; letter-spacing: -0.01em; }
+    .nav-back { font-size: 0.8125rem; color: var(--gray); transition: color 0.15s; }
+    .nav-back:hover { color: var(--black); text-decoration: none; }
+
+    .text-wrap { max-width: 720px;  margin: 0 auto; padding: 0 24px; }
+    .img-outer  { max-width: 1000px; margin: 56px auto; padding: 0 24px; }
+
+    .toc-sidebar { display: none; position: fixed; top: 100px; left: calc(50% + 528px); width: 180px; z-index: 50; transform: translateZ(0); will-change: transform; }
+    @media (min-width: 1400px) { .toc-sidebar { display: flex; flex-direction: column; max-height: calc(100vh - 120px); } }
+    .toc-label { font-size: 0.625rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: #888888; margin-bottom: 12px; }
+    .toc-scroll-wrap { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+    .toc-list { list-style: none; flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: none; }
+    .toc-list::-webkit-scrollbar { display: none; }
+    .toc-list li + li { margin-top: 2px; }
+    .toc-link { display: block; font-size: 0.75rem; line-height: 1.55; color: var(--gray); padding: 3px 0 3px 12px; border-left: 1.5px solid transparent; transition: color 0.15s, border-color 0.15s; }
+    .toc-link:hover { color: var(--black); text-decoration: none; }
+    .toc-link.active { color: var(--black); border-left-color: var(--black); }
+
+    .proj-header { padding: 72px 0 52px; border-bottom: 1px solid var(--light-gray); }
+    .proj-label  { font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray); margin-bottom: 20px; }
+    .proj-title  { font-family: var(--font-sans); font-size: 20px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.05; margin-bottom: 16px; }
+    .proj-sub    { font-size: 1rem; color: var(--gray); line-height: 1.65; }
+
+    .proj-meta { display: flex; gap: 48px; padding: 32px 0; border-bottom: 1px solid var(--light-gray); flex-wrap: wrap; }
+    .proj-meta > div { flex: 1; min-width: 132px; }
+    .meta-key  { font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray); margin-bottom: 4px; }
+    .meta-val  { font-size: 0.9375rem; }
+
+    .prose { font-size: 1.0625rem; line-height: 1.875; color: #1a1a1a; padding: 52px 0 0; }
+    .prose p + p { margin-top: 1.4em; }
+    .prose h2 { font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray); margin-bottom: 20px; scroll-margin-top: 80px; }
+
+    .img-frame  { border-radius: 8px; border: 1px solid rgba(0,0,0,0.07); overflow: hidden; }
+    .img-frame img { width: 100%; height: auto; display: block; }
+    .img-grid   { display: grid; grid-template-columns: 1fr 1fr;     gap: 8px; }
+    .img-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+
+    .img-ph { width: 100%; aspect-ratio: 7/5; background: #f2f2f2; display: flex; align-items: center; justify-content: center; }
+    .img-ph.sq   { aspect-ratio: 7/5; }
+    .img-ph.tall { aspect-ratio: 7/5; }
+    .img-ph span { font-size: 0.6875rem; letter-spacing: 0.08em; text-transform: uppercase; color: #c0c0c0; user-select: none; }
+    .img-caption { font-size: 0.8125rem; color: var(--gray); margin-top: 10px; }
+
+    .proj-nav { display: flex; border-top: 1px solid var(--light-gray); margin-top: 80px; }
+    .pn-item  { flex: 1; padding: 32px 0 72px; display: flex; flex-direction: column; gap: 6px; }
+    .pn-item.next { text-align: right; }
+    .pn-arrow { font-size: 1.125rem; color: var(--gray); line-height: 1; }
+    .pn-label { font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray); }
+    .pn-name  { font-size: 0.9375rem; font-weight: 500; letter-spacing: -0.01em; }
+    .pn-item a { display: flex; flex-direction: column; gap: 6px; }
+    .pn-item a:hover { text-decoration: none; }
+    .pn-item a:hover .pn-name { opacity: 0.6; }
+    .pn-item.next a { align-items: flex-end; }
+
+    footer { padding: 0 0 24px; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; border-top: 1px solid var(--light-gray); padding-top: 16px; }
+    .footer-copy  { font-size: 0.8125rem; color: var(--gray); }
+    .footer-links { display: flex; gap: 20px; list-style: none; }
+    .footer-links a { font-size: 0.8125rem; color: var(--gray); }
+    .footer-links a:hover { color: var(--black); text-decoration: none; }
+
+    @media (max-width: 680px) {
+      .img-outer { padding: 0 16px; }
+      .img-grid, .img-grid-3 { grid-template-columns: 1fr; }
+      .proj-meta { gap: 20px; }
+      
+      .pn-item { padding: 32px 0 40px; }
+    }
+  </style>
+</head>
+<body>
+
+  <aside class="toc-sidebar" aria-label="목차">
+    <p class="toc-label">On this page</p>
+    <ul class="toc-list">
+    </ul>
+  </aside>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="../index.html" class="nav-logo">Jaein Works.</a>
+      <a href="../project.html" class="nav-back">← Project</a>
+    </div>
+  </nav>
+
+  <main>
+
+    <div class="text-wrap">
+      <header class="proj-header">
+        <p class="proj-label">Project</p>
+        <h1 class="proj-title">프리랜서</h1>
+        <p class="proj-sub">개인 작업자로서 카페, 아티스트, 소규모 사업자를 위한 브랜딩과 웹 작업을 진행했습니다. 클라이언트와 직접 소통하며 요구를 실제 결과물로 만드는 전 과정을 경험했습니다.</p>
+      </header>
+      <div class="proj-meta">
+        <div><div class="meta-key">기간</div><div class="meta-val">2018 — 2020</div></div>
+        <div><div class="meta-key">분야</div><div class="meta-val">아이덴티티, 인쇄, 웹</div></div>
+        <div><div class="meta-key">도구</div><div class="meta-val">Sketch, Illustrator, WordPress</div></div>
+      </div>
+    </div>
+
+    <div class="text-wrap">
+      <div class="prose">
+        <h2 id="overview">Overview</h2>
+        <p>혼자 클라이언트를 찾고, 미팅하고, 견적을 내고, 납품하는 모든 과정을 경험했습니다. 디자인 실력보다 클라이언트와의 커뮤니케이션이 프로젝트 결과를 더 크게 좌우한다는 것을 이 시기에 배웠습니다.</p>
+        <p>막히면 직접 찾아야 했고, 그 과정에서 기술보다 사고방식이 더 중요하다는 것을 알게 되었습니다.</p>
+      </div>
+    </div>
+
+    <div class="img-outer">
+      <div class="img-frame">
+        <div class="img-ph"><span>Selected Works Overview</span></div>
+      </div>
+      <p class="img-caption">주요 작업물 모음</p>
+    </div>
+
+    <div class="text-wrap">
+      <div class="prose">
+        <h2 id="local">로컬 비즈니스 브랜딩</h2>
+        <p>카페, 소규모 쇼핑몰, 개인 사업자를 위한 로고와 명함, 간판 디자인을 제작했습니다. 예산이 한정된 클라이언트가 많아서, 최소한의 요소로 최대의 효과를 내는 방법을 고민하는 훈련이 되었습니다.</p>
+      </div>
+    </div>
+
+    <div class="img-outer">
+      <div class="img-grid-3">
+        <div class="img-frame"><div class="img-ph sq"><span>Cafe Logo</span></div></div>
+        <div class="img-frame"><div class="img-ph sq"><span>Shop Identity</span></div></div>
+        <div class="img-frame"><div class="img-ph sq"><span>Personal Brand</span></div></div>
+      </div>
+      <p class="img-caption">카페 로고 / 쇼핑몰 아이덴티티 / 개인 브랜드</p>
+    </div>
+
+    <div class="text-wrap">
+      <div class="prose">
+        <h2 id="portfolio">포트폴리오 & 개인 사이트</h2>
+        <p>아티스트와 크리에이터의 작업물을 돋보이게 하는 개인 사이트를 설계하고 WordPress로 퍼블리싱했습니다. 컨텐츠와 형식의 균형을 맞추는 훈련이 되었습니다.</p>
+      </div>
+    </div>
+
+    <div class="img-outer">
+      <div class="img-grid">
+        <div class="img-frame"><div class="img-ph tall"><span>Artist Portfolio Site</span></div></div>
+        <div class="img-frame"><div class="img-ph tall"><span>Photographer Website</span></div></div>
+      </div>
+      <p class="img-caption">아티스트 포트폴리오(좌) / 사진작가 사이트(우)</p>
+    </div>
+
+    <div class="text-wrap">
+      <div class="prose">
+        <h2 id="print">인쇄물 & 패키지</h2>
+        <p>메뉴판, 포스터, 패키지 디자인 등 다양한 오프라인 매체를 다루었습니다. 인쇄 사양 이해와 색상 프로파일 관리를 익히는 계기가 되었습니다.</p>
+      </div>
+    </div>
+
+    <div class="img-outer">
+      <div class="img-frame">
+        <div class="img-ph"><span>Print & Packaging Work</span></div>
+      </div>
+      <p class="img-caption">인쇄물 & 패키지 작업</p>
+    </div>
+
+    <div class="text-wrap">
+      <nav class="proj-nav" aria-label="프로젝트 이동">
+        <div class="pn-item prev">
+          <a href="agency.html">
+            <span class="pn-arrow">←</span>
+            <span class="pn-label">이전 프로젝트</span>
+            <span class="pn-name">에이전시 이름</span>
+          </a>
+        </div>
+        <div class="pn-item next">
+          <a href="jandi.html">
+            <span class="pn-arrow">→</span>
+            <span class="pn-label">다음 프로젝트</span>
+            <span class="pn-name">회사 이름</span>
+          </a>
+        </div>
+      </nav>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="text-wrap">
+      <div class="footer-inner">
+        <span class="footer-copy">&copy; 2026 Jaein Min.</span>
+        <ul class="footer-links">
+          <li><a href="https://www.instagram.com/janem1n/" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="https://linkedin.com/" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href="https://drive.google.com/file/d/1FS4FL3Ozoogj-3Ti-RuVPRnmwaTuRskZ/view?usp=drive_link" target="_blank" rel="noopener">Resume</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/toc.js"></script>
+  <script src="../js/lightbox.js"></script>
+  <script src="../data/projects.js"></script>
+  <script src="../js/proj-nav.js"></script>
+  <script src="../js/protect.js"></script>
+</body>
+</html>

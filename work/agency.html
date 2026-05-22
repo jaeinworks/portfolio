@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>에이전시 이름 — 재인</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black: #0a0a0a; --gray: #888; --light-gray: #d8d8d8; --white: #ffffff;
+      --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-serif: "Georgia", "Times New Roman", serif;
+    }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body { background: var(--white); color: var(--black); font-family: var(--font-sans); font-weight: 400; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    a:hover { text-decoration: underline; text-underline-offset: 3px; }
+    .container { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+
+    nav { position: sticky; top: 0; background: rgba(255,255,255,0.82); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 100; }
+    .nav-inner { max-width: 720px; margin: 0 auto; padding: 0 24px; height: 52px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { font-size: 0.9375rem; font-weight: 600; letter-spacing: -0.01em; }
+    .nav-back { font-size: 0.8125rem; color: var(--gray); }
+    .nav-back:hover { color: var(--black); text-decoration: none; }
+
+    .page-header { padding: 72px 0 56px; border-bottom: 1px solid var(--light-gray); }
+    .page-label { font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray); margin-bottom: 20px; }
+    .page-title { font-family: var(--font-serif); font-size: clamp(1.75rem, 5vw, 2.75rem); font-weight: 400; letter-spacing: -0.025em; line-height: 1.15; margin-bottom: 16px; }
+    .page-meta { font-size: 0.875rem; color: var(--gray); }
+
+    .meta-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; padding: 40px 0; border-bottom: 1px solid var(--light-gray); }
+    .meta-cell { padding: 0; }
+    .meta-cell + .meta-cell { border-left: 1px solid var(--light-gray); padding-left: 24px; }
+    .meta-key { font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray); margin-bottom: 6px; }
+    .meta-val { font-size: 0.9375rem; }
+
+    .content { padding: 56px 0; }
+    .content-section { margin-bottom: 52px; }
+    .content-section:last-child { margin-bottom: 0; }
+    .content-heading { font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray); margin-bottom: 20px; }
+    .content-body { font-size: 1rem; line-height: 1.85; color: #222; max-width: 600px; }
+    .content-body p + p { margin-top: 1.3em; }
+
+    .tag-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+    .tag { font-size: 0.75rem; color: var(--gray); border: 1px solid var(--light-gray); padding: 4px 10px; border-radius: 2px; }
+
+    footer { padding: 40px 0 56px; border-top: 1px solid var(--light-gray); }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .footer-copy { font-size: 0.8125rem; color: var(--gray); }
+    .footer-links { display: flex; gap: 20px; list-style: none; }
+    .footer-links a { font-size: 0.8125rem; color: var(--gray); }
+    .footer-links a:hover { color: var(--black); text-decoration: none; }
+
+    @media (max-width: 600px) {
+      .meta-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
+      .meta-cell + .meta-cell { border-left: none; padding-left: 0; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="../index.html" class="nav-logo">Jaein Works.</a>
+      <a href="../index.html#work" class="nav-back">← Work</a>
+    </div>
+  </nav>
+
+  <main class="container">
+
+    <header class="page-header">
+      <p class="page-label">Work</p>
+      <h1 class="page-title">에이전시 이름</h1>
+      <p class="page-meta">Designer · 2020 — 2022</p>
+    </header>
+
+    <div class="meta-grid">
+      <div class="meta-cell">
+        <div class="meta-key">역할</div>
+        <div class="meta-val">Designer</div>
+      </div>
+      <div class="meta-cell">
+        <div class="meta-key">기간</div>
+        <div class="meta-val">2020 — 2022</div>
+      </div>
+      <div class="meta-cell">
+        <div class="meta-key">분야</div>
+        <div class="meta-val">브랜딩, 웹 디자인</div>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="content-section">
+        <p class="content-heading">Overview</p>
+        <div class="content-body">
+          <p>
+            다양한 클라이언트의 브랜드 아이덴티티와 웹 경험을 설계했습니다.
+            에이전시 특성상 짧은 주기 안에 여러 프로젝트를 병행했고,
+            빠른 의사결정과 명확한 커뮤니케이션의 중요성을 몸으로 익혔습니다.
+          </p>
+          <p>
+            브랜드의 본질을 시각 언어로 번역하는 작업에 특히 집중했습니다.
+            단순히 예쁜 것이 아니라, 브랜드의 가치를 정확히 전달하는
+            디자인을 만들고자 했습니다.
+          </p>
+        </div>
+      </div>
+
+      <div class="content-section">
+        <p class="content-heading">주요 작업</p>
+        <div class="content-body">
+          <p>
+            브랜드 아이덴티티 — 스타트업 및 중소기업을 위한 로고, 컬러
+            시스템, 타이포그래피 가이드를 포함한 브랜드 매뉴얼을 제작했습니다.
+            총 8개 클라이언트의 브랜딩 작업을 담당했습니다.
+          </p>
+          <p>
+            웹사이트 디자인 — 기업 소개 사이트, 랜딩 페이지, 이커머스 UI를
+            디자인했습니다. Webflow와 Framer를 활용해 노코드 퍼블리싱까지
+            직접 진행하기도 했습니다.
+          </p>
+          <p>
+            인쇄물 — 브로슈어, 명함, 패키지 디자인 등 오프라인 물리 매체
+            작업도 병행했습니다. 인쇄 사양 이해와 색상 프로파일 관리를
+            익히는 계기가 되었습니다.
+          </p>
+        </div>
+      </div>
+
+      <div class="content-section">
+        <p class="content-heading">사용 도구</p>
+        <div class="tag-list">
+          <span class="tag">Figma</span>
+          <span class="tag">Illustrator</span>
+          <span class="tag">Photoshop</span>
+          <span class="tag">Webflow</span>
+          <span class="tag">InDesign</span>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <span class="footer-copy">&copy; 2026 Jaein Min.</span>
+        <ul class="footer-links">
+          <li><a href="mailto:j.g.min830@gmail.com">j.g.min830@gmail.com</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

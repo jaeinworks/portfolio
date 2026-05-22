@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>피그마 컴포넌트 구조에 대한 생각 — 재인</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black: #0a0a0a; --gray: #888; --light-gray: #d8d8d8; --white: #ffffff;
+      --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-serif: "Georgia", "Times New Roman", serif;
+    }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body { background: var(--white); color: var(--black); font-family: var(--font-sans); font-weight: 400; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    a:hover { text-decoration: underline; text-underline-offset: 3px; }
+    .container { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+
+    nav { position: sticky; top: 0; background: rgba(255,255,255,0.82); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 100; }
+    .nav-inner { max-width: 720px; margin: 0 auto; padding: 0 24px; height: 52px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { font-size: 0.9375rem; font-weight: 600; letter-spacing: -0.01em; }
+    .nav-back { font-size: 0.8125rem; color: var(--gray); }
+    .nav-back:hover { color: var(--black); text-decoration: none; }
+
+    .article-header { padding: 72px 0 48px; border-bottom: 1px solid var(--light-gray); }
+    .article-label { font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray); margin-bottom: 20px; }
+    .article-title { font-family: var(--font-serif); font-size: clamp(1.625rem, 5vw, 2.5rem); font-weight: 400; letter-spacing: -0.025em; line-height: 1.2; margin-bottom: 20px; }
+    .article-date { font-size: 0.875rem; color: var(--gray); }
+
+    .article-body { padding: 56px 0 80px; font-size: 1.0625rem; line-height: 1.9; color: #1a1a1a; max-width: 640px; }
+    .article-body p { margin-bottom: 1.5em; }
+    .article-body h2 { font-family: var(--font-sans); font-size: 1rem; font-weight: 600; letter-spacing: -0.01em; margin: 2.4em 0 0.8em; }
+    .article-body blockquote { border-left: 2px solid var(--light-gray); padding-left: 20px; color: var(--gray); margin: 1.8em 0; font-style: italic; }
+
+    footer { padding: 40px 0 56px; border-top: 1px solid var(--light-gray); }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .footer-copy { font-size: 0.8125rem; color: var(--gray); }
+    .footer-links { display: flex; gap: 20px; list-style: none; }
+    .footer-links a { font-size: 0.8125rem; color: var(--gray); }
+    .footer-links a:hover { color: var(--black); text-decoration: none; }
+    @media (max-width: 600px) { .footer-inner { flex-direction: column; align-items: flex-start; } }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="../index.html" class="nav-logo">Jaein Works.</a>
+      <a href="../index.html#archive" class="nav-back">← Archive</a>
+    </div>
+  </nav>
+
+  <main class="container">
+
+    <header class="article-header">
+      <p class="article-label">Archive</p>
+      <h1 class="article-title">피그마 컴포넌트 구조에 대한 생각</h1>
+      <p class="article-date">2024. 11</p>
+    </header>
+
+    <div class="article-body">
+      <p>
+        피그마를 오래 쓰다 보면 컴포넌트 구조에 대한 나름의 철학이 생긴다.
+        처음엔 그냥 만들고, 나중엔 고치고, 또 나중엔 처음부터 다시 만드는
+        과정을 반복하면서.
+      </p>
+
+      <h2>컴포넌트는 코드처럼 생각해야 한다</h2>
+      <p>
+        피그마 컴포넌트를 잘 만든다는 것은, 사실 좋은 코드 컴포넌트를 설계하는
+        것과 크게 다르지 않다. 단일 책임, 예측 가능한 props, 합성 가능한 구조.
+        이 세 가지를 피그마에서도 그대로 적용할 수 있다.
+      </p>
+      <p>
+        버튼 하나가 너무 많은 변형을 가지면 개발팀도 헷갈리고, 다음에 쓰는
+        디자이너도 헷갈린다. 변형은 적을수록 좋다.
+      </p>
+
+      <h2>Base / Variant 분리</h2>
+      <p>
+        Base 컴포넌트는 레이아웃과 구조만 담당하고, Variant는 시각적 차이만
+        담당하도록 분리하면 훨씬 관리가 쉬워진다. Base를 수정하면 모든 Variant에
+        반영되고, Variant는 독립적으로 스타일만 다르게 가져갈 수 있다.
+      </p>
+
+      <blockquote>
+        좋은 컴포넌트는 사용하는 사람이 내부 구조를 몰라도 쓸 수 있어야 한다.
+      </blockquote>
+
+      <h2>네이밍이 전부다</h2>
+      <p>
+        컴포넌트 이름은 기능이 아니라 역할로 짓는 것이 좋다.
+        <code>BlueButton</code>이 아니라 <code>Button/Primary</code>,
+        <code>BigCard</code>가 아니라 <code>Card/Featured</code>.
+        이름이 명확하면 검색도 쉽고, 새로운 팀원이 왔을 때 설명이 덜 필요하다.
+      </p>
+      <p>
+        그리고 개발 컴포넌트 이름과 최대한 맞추는 것이 핵심이다.
+        디자인에서 <code>Chip</code>인데 코드에서 <code>Badge</code>면
+        언제나 번역 비용이 생긴다.
+      </p>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <span class="footer-copy">&copy; 2026 Jaein Min.</span>
+        <ul class="footer-links">
+          <li><a href="mailto:j.g.min830@gmail.com">j.g.min830@gmail.com</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

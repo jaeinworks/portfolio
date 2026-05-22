@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>유니베라 전국 대리점 사장 세미나</title>
+  <link rel="icon" href="../favicon.png" />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black: #0a0a0a; --gray: #888; --light-gray: #ebebeb; --white: #fff;
+      --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-serif: "Georgia", "Times New Roman", serif;
+    }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body { background: var(--white); color: var(--black); font-family: var(--font-sans); font-weight: 400; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+    nav { position: sticky; top: 0; background: rgba(255,255,255,0.82); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 100; will-change: transform; }
+    .nav-inner { max-width: 720px; margin: 0 auto; padding: 0 24px; height: 52px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { font-size: 0.9375rem; font-weight: 600; letter-spacing: -0.01em; }
+    .nav-back { font-size: 0.8125rem; color: var(--gray); transition: color 0.15s; }
+    .nav-back:hover { color: var(--black); text-decoration: none; }
+
+    .text-wrap { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+    .img-outer  { max-width: 1000px; margin: 56px auto; padding: 0 24px; }
+
+    .toc-sidebar { display: none; position: fixed; top: 100px; left: calc(50% + 528px); width: 180px; z-index: 50; transform: translateZ(0); will-change: transform; }
+    @media (min-width: 1400px) { .toc-sidebar { display: flex; flex-direction: column; max-height: calc(100vh - 120px); } }
+    .toc-label { font-size: 0.625rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: #888888; margin-bottom: 12px; }
+    .toc-scroll-wrap { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+    .toc-list { list-style: none; flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: none; }
+    .toc-list::-webkit-scrollbar { display: none; }
+    .toc-list li + li { margin-top: 2px; }
+    .toc-link { display: block; font-size: 0.75rem; line-height: 1.55; color: var(--gray); padding: 3px 0 3px 12px; border-left: 1.5px solid transparent; transition: color 0.15s, border-color 0.15s; }
+    .toc-link:hover { color: var(--black); text-decoration: none; }
+    .toc-link.active { color: var(--black); border-left-color: var(--black); }
+
+    .proj-header { padding: 72px 0 52px; border-bottom: 1px solid var(--light-gray); }
+    .proj-label  { font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray); margin-bottom: 20px; }
+    .proj-title  { font-family: var(--font-sans); font-size: 20px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.05; margin-bottom: 16px; }
+    .proj-sub    { font-size: 1rem; color: var(--gray); line-height: 1.65; }
+
+    .proj-meta { display: flex; gap: 48px; padding: 32px 0; border-bottom: 1px solid var(--light-gray); flex-wrap: wrap; }
+    .proj-meta > div { flex: 1; min-width: 132px; }
+    .meta-key  { font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray); margin-bottom: 4px; }
+    .meta-val  { font-size: 0.9375rem; }
+
+    .prose { font-size: 1.0625rem; line-height: 1.875; color: #1a1a1a; padding: 52px 0 0; }
+    .prose p + p { margin-top: 1.4em; }
+    .prose h2 { font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray); margin-bottom: 20px; scroll-margin-top: 80px; }
+    .prose h1 { font-family: var(--font-sans); font-size: 20px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.05; margin-bottom: 16px; }
+
+    .img-frame  { border-radius: 8px; border: 1px solid rgba(0,0,0,0.07); overflow: hidden; }
+    .img-frame img { width: 100%; height: auto; display: block; }
+    .img-grid   { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .img-caption { font-size: 0.8125rem; color: var(--gray); margin-top: 10px; }
+    .img-ph { width: 100%; aspect-ratio: 7/5; background: #f2f2f2; display: flex; align-items: center; justify-content: center; }
+    .img-ph span { font-size: 0.6875rem; letter-spacing: 0.08em; text-transform: uppercase; color: #c0c0c0; user-select: none; }
+
+    .proj-nav { display: flex; border-top: 1px solid var(--light-gray); margin-top: 80px; }
+    .pn-item  { flex: 1; padding: 32px 0 72px; display: flex; flex-direction: column; gap: 6px; }
+    .pn-item.next { text-align: right; }
+    .pn-arrow { font-size: 1.125rem; color: var(--gray); line-height: 1; }
+    .pn-label { font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray); }
+    .pn-name  { font-size: 0.9375rem; font-weight: 500; letter-spacing: -0.01em; }
+    .pn-item a { display: flex; flex-direction: column; gap: 6px; }
+    .pn-item a:hover { text-decoration: none; }
+    .pn-item a:hover .pn-name { opacity: 0.6; }
+    .pn-item.next a { align-items: flex-end; }
+
+    footer { padding: 0 0 24px; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; border-top: 1px solid var(--light-gray); padding-top: 16px; }
+    .footer-copy  { font-size: 0.8125rem; color: var(--gray); }
+    .footer-links { display: flex; gap: 20px; list-style: none; }
+    .footer-links a { font-size: 0.8125rem; color: var(--gray); }
+    .footer-links a:hover { color: var(--black); text-decoration: none; }
+
+    @media (max-width: 680px) {
+      .img-outer { padding: 0 16px; }
+      .img-grid { grid-template-columns: 1fr; }
+      .proj-meta { gap: 20px; }
+      .pn-item { padding: 32px 0 40px; }
+    }
+  </style>
+</head>
+<body>
+
+  <aside class="toc-sidebar" aria-label="목차">
+    <p class="toc-label">On this page</p>
+    <ul class="toc-list"></ul>
+  </aside>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="../index.html" class="nav-logo">Jaein Works.</a>
+      <a href="../project.html" class="nav-back">← Project</a>
+    </div>
+  </nav>
+
+  <main>
+
+    <div class="text-wrap">
+      <header class="proj-header">
+        <p class="proj-label">Project</p>
+        <h1 class="proj-title">유니베라 전국 대리점 사장 세미나</h1>
+      </header>
+      <div class="proj-meta">
+        <div><div class="meta-key">기간</div><div class="meta-val">2018.11 — 2019.1</div></div>
+        <div><div class="meta-key">분야</div><div class="meta-val">Visual Design</div></div>
+        <div><div class="meta-key">도구</div><div class="meta-val">Illustrator, Photoshop</div></div>
+        <div><div class="meta-key">클라이언트</div><div class="meta-val">Univera</div></div>
+      </div>
+    </div>
+
+    <div class="text-wrap">
+      <div class="prose">
+        <h2 id="overview">Overview</h2>
+        <p>매년 연말에 개최되는 이 행사는 알로에 관련 제품을 제조하고 유통하는 유니베라에서 진행되며 한 해를 마무리하고 그다음 해의 목표를 결의하는 시상식입니다. 알로에와 관련된 사업을 수행하는 기업의 특성을 반영하여 알로에의 중요성을 강조하면서도, 시상식의 공식적인 분위기도 함께 느끼게 하는 작업을 진행하였습니다.</p>
+      </div>
+    </div>
+    <div class="img-outer">
+      <div class="img-frame"><img src="../images/exhbns11.jpg" alt="Overview"></div>
+    </div>
+
+    <div class="text-wrap">
+      <div class="prose">
+        <h2 id="section-02">Key Visual</h2>
+        <p>'변화의 10년, 진화하는 방판 2019'라는 행사 슬로건에서 출발하여 'Change and Evolution'을 키워드로 설정하고, 유니베라의 핵심 제품인 알로에 추출액 방울이 떨어지는 형태를 메인 비주얼로 도출하였습니다. 방울 안에서 피어나는 알로에를 통해 한 단계 더 발전하는 변화의 모습을 표현하고, 주변에 빛의 궤도와 함께 운동·자연·인사·알로에·걷기·소식 등 유니베라의 6가지 웰니스 생활 규칙을 상징하는 입체 아이콘을 배치하여, 브랜드의 긍정적인 진화 메시지를 시각적으로 완성하였습니다.</p>
+      </div>
+    </div>
+    <div class="img-outer">
+      <div class="img-grid">
+        <div class="img-frame"><img src="../images/exhbns12-1.jpg" alt="Image 02"></div>
+        <div class="img-frame"><img src="../images/exhbns12-2.jpg" alt="Image 03"></div>
+      </div>
+    </div>
+
+    <div class="text-wrap">
+      <div class="prose">
+        <h2 id="section-04">Variation</h2>
+        <p>확립된 키 비주얼을 바탕으로 행사 전반에 필요한 다양한 출력물로 확장 제작하였습니다. 실외 대형 배너와 행잉 배너를 통해 행사장 안팎에서 브랜드 존재감을 높이고, 네임택은 스태프·참가자·역할별로 컬러를 구분하여 현장 운영의 효율을 높였습니다. 시상 보드와 X배너, 안내 배너까지 각 용도에 맞게 레이아웃을 최적화하면서도 키 비주얼의 세계관이 행사장 어느 곳에서도 끊김 없이 이어질 수 있도록 하였습니다.</p>
+      </div>
+    </div>
+    <div class="img-outer">
+      <div class="img-frame"><img src="../images/exhbns13.jpg" alt="Image 05"></div>
+    </div>
+
+    <div class="img-outer">
+      <div class="img-frame"><img src="../images/exhbns14.jpg" alt="Image 06"></div>
+    </div>
+
+    <div class="img-outer">
+      <div class="img-grid">
+        <div class="img-frame"><img src="../images/exhbns15-1.jpg" alt="Image 07"></div>
+        <div class="img-frame"><img src="../images/exhbns15-2.jpg" alt="Image 08"></div>
+      </div>
+    </div>
+
+    <div class="text-wrap">
+      <nav class="proj-nav" aria-label="프로젝트 이동">
+        <div class="pn-item prev">
+          <a href="#">
+            <span class="pn-arrow">←</span>
+            <span class="pn-label">이전 프로젝트</span>
+            <span class="pn-name">이전 프로젝트</span>
+          </a>
+        </div>
+        <div class="pn-item next">
+          <a href="#">
+            <span class="pn-arrow">→</span>
+            <span class="pn-label">다음 프로젝트</span>
+            <span class="pn-name">다음 프로젝트</span>
+          </a>
+        </div>
+      </nav>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="text-wrap">
+      <div class="footer-inner">
+        <span class="footer-copy">&copy; 2026 Jaein Min.</span>
+        <ul class="footer-links">
+          <li><a href="https://www.instagram.com/janem1n/" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="https://linkedin.com/" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href="https://drive.google.com/file/d/1FS4FL3Ozoogj-3Ti-RuVPRnmwaTuRskZ/view?usp=drive_link" target="_blank" rel="noopener">Resume</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../data/projects.js"></script>
+  <script src="../js/toc.js"></script>
+  <script src="../js/lightbox.js"></script>
+  <script src="../js/proj-nav.js"></script>
+  <script src="../js/protect.js"></script>
+</body>
+</html>

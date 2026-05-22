@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>타이포그래피가 인터페이스를 만드는 방식 — 재인</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black: #0a0a0a; --gray: #888; --light-gray: #d8d8d8; --white: #ffffff;
+      --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-serif: "Georgia", "Times New Roman", serif;
+    }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body { background: var(--white); color: var(--black); font-family: var(--font-sans); font-weight: 400; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    a:hover { text-decoration: underline; text-underline-offset: 3px; }
+    .container { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+
+    nav { position: sticky; top: 0; background: rgba(255,255,255,0.82); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 100; }
+    .nav-inner { max-width: 720px; margin: 0 auto; padding: 0 24px; height: 52px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { font-size: 0.9375rem; font-weight: 600; letter-spacing: -0.01em; }
+    .nav-back { font-size: 0.8125rem; color: var(--gray); }
+    .nav-back:hover { color: var(--black); text-decoration: none; }
+
+    .article-header { padding: 72px 0 48px; border-bottom: 1px solid var(--light-gray); }
+    .article-label { font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray); margin-bottom: 20px; }
+    .article-title { font-family: var(--font-serif); font-size: clamp(1.625rem, 5vw, 2.5rem); font-weight: 400; letter-spacing: -0.025em; line-height: 1.2; margin-bottom: 20px; }
+    .article-date { font-size: 0.875rem; color: var(--gray); }
+
+    .article-body { padding: 56px 0 80px; font-size: 1.0625rem; line-height: 1.9; color: #1a1a1a; max-width: 640px; }
+    .article-body p { margin-bottom: 1.5em; }
+    .article-body h2 { font-family: var(--font-sans); font-size: 1rem; font-weight: 600; letter-spacing: -0.01em; margin: 2.4em 0 0.8em; }
+    .article-body blockquote { border-left: 2px solid var(--light-gray); padding-left: 20px; color: var(--gray); margin: 1.8em 0; font-style: italic; }
+
+    footer { padding: 40px 0 56px; border-top: 1px solid var(--light-gray); }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .footer-copy { font-size: 0.8125rem; color: var(--gray); }
+    .footer-links { display: flex; gap: 20px; list-style: none; }
+    .footer-links a { font-size: 0.8125rem; color: var(--gray); }
+    .footer-links a:hover { color: var(--black); text-decoration: none; }
+    @media (max-width: 600px) { .footer-inner { flex-direction: column; align-items: flex-start; } }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="../index.html" class="nav-logo">Jaein Works.</a>
+      <a href="../index.html#archive" class="nav-back">← Archive</a>
+    </div>
+  </nav>
+
+  <main class="container">
+
+    <header class="article-header">
+      <p class="article-label">Archive</p>
+      <h1 class="article-title">타이포그래피가 인터페이스를 만드는 방식</h1>
+      <p class="article-date">2024. 07</p>
+    </header>
+
+    <div class="article-body">
+      <p>
+        UI 디자인에서 타이포그래피는 종종 장식으로 취급된다. 폰트를 고르고,
+        크기를 정하고, 끝. 하지만 타이포그래피는 단순히 글자를 예쁘게 보이게
+        하는 것이 아니다. 그것은 정보를 어떻게 읽을 것인지를 설계하는 일이다.
+      </p>
+
+      <h2>위계가 곧 구조다</h2>
+      <p>
+        사용자는 화면을 읽기 전에 먼저 스캔한다. 이때 시선이 어디로 먼저 가는지를
+        결정하는 것이 타이포그래피 위계다. H1이 너무 크거나 작으면 사용자는
+        어디서 시작해야 할지 모른다. 위계가 무너지면 구조도 무너진다.
+      </p>
+
+      <h2>줄간격은 숨 쉬는 공간이다</h2>
+      <p>
+        줄간격이 좁으면 텍스트가 답답해 보이고, 너무 넓으면 분리된 느낌이 든다.
+        본문 기준으로 1.6 ~ 1.8배가 가장 편안하게 읽힌다고 알려져 있지만,
+        폰트 종류와 자간에 따라 달라진다. 숫자보다 눈으로 확인하는 것이 더 정확하다.
+      </p>
+
+      <blockquote>
+        타이포그래피의 목적은 텍스트를 보이게 하는 것이 아니라
+        읽히게 하는 것이다.
+      </blockquote>
+
+      <h2>한글 타이포그래피의 특수성</h2>
+      <p>
+        한글은 영문보다 자소 구성이 복잡해서 같은 pt 크기여도 시각적으로 작아
+        보이는 경우가 많다. 영문과 한글이 혼용될 때는 특히 주의해야 한다.
+        Pretendard 같은 한글 최적화 폰트가 있지만, 그것만으로 해결되지 않는
+        맥락들이 여전히 존재한다.
+      </p>
+      <p>
+        특히 모바일에서는 최소 15px 이상의 본문 폰트를 권장한다. 그 이하는
+        독자에게 무의식적인 피로를 준다. 접근성 측면에서도 중요한 기준이다.
+      </p>
+
+      <h2>폰트는 적게 쓸수록 좋다</h2>
+      <p>
+        하나의 프로젝트에 2개 이상의 폰트를 쓸 이유는 거의 없다.
+        serif와 sans-serif의 조합이 필요하다면 모르겠지만, sans-serif 두 개를
+        섞는 건 대부분 혼란만 만든다. 하나의 폰트 패밀리 안에서 weight와
+        크기로 위계를 만드는 것이 더 일관성 있는 결과를 낸다.
+      </p>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <span class="footer-copy">&copy; 2026 Jaein Min.</span>
+        <ul class="footer-links">
+          <li><a href="mailto:j.g.min830@gmail.com">j.g.min830@gmail.com</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
