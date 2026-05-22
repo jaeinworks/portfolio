@@ -26,7 +26,7 @@
         {
           "type": "header",
           "key": "referer",
-          "value": "^https?://(?!portfolio-mu-ebon-bv63zhcsrv\\.vercel\\.app).*"
+          "value": "^https?://(?!jaeinworks\\.me).*"
         }
       ],
       "destination": "/",
