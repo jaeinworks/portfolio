@@ -26,7 +26,7 @@
         {
           "type": "header",
           "key": "referer",
-          "value": "^https?://(?!jaeinworks\\.me).*"
+          "value": "^https?://(?!(www\\.)?jaeinworks\\.me).*"
         }
       ],
       "destination": "/",
